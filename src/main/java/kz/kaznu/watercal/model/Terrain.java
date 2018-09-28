@@ -55,8 +55,7 @@ public class Terrain {
     }
 
     private List<Long> initHighestRight() {
-        ArrayList<Long> res = new ArrayList<>(asList.size());
-        asList.forEach(res::add);// FIXME init it correctly
+        List<Long> res = Arrays.asList(new Long[asList.size()]);
         Long maxHighestSoFar = 0L;
         for (int i = asList.size() - 1; i >= 0; i--) {
             Long height = asList.get(i);
