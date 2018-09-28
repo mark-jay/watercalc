@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -12,6 +13,9 @@ import java.util.stream.Stream;
  * @since 9/28/18 10:08 PM
  */
 public class Terrain {
+
+    private static final Logger log = Logger.getLogger(Terrain.class.getCanonicalName());
+
     private final List<Long> asList;
     private final List<Long> highestLeft;
     private final List<Long> highestRight;
@@ -20,6 +24,12 @@ public class Terrain {
         this.asList = generateFromStringArray(data);
         this.highestLeft = initHighestLeft();
         this.highestRight = initHighestRight();
+    }
+
+    public Long calc() {
+        return IntStream.range(0, asList.size())
+                .mapToLong(this::findUnitsByIndex)
+                .sum();
     }
 
     private List<Long> initHighestLeft() {
@@ -32,24 +42,18 @@ public class Terrain {
         return res;
     }
 
-    public Long calc() {
-        return IntStream.range(0, asList.size())
-                .mapToLong(this::findUnitsByIndex)
-                .sum();
-    }
-
-    public long findUnitsByIndex(int index) {
+    long findUnitsByIndex(int index) {
         Long left = findHighestFromTheLeft(index);
-        System.out.println("left = " + left);
+        log.info(String.format("left = %d", left));
 
         Long right = findHighestFromTheRight(index);
-        System.out.println("right = " + right);
+        log.info(String.format("right = %d", right));
 
         long waterLevel = Math.min(left, right);
-        System.out.println("waterLevel = " + waterLevel);
+        log.info(String.format("waterLevel = %d", waterLevel));
 
         long unitsOfWater = waterLevel - asList.get(index);
-        System.out.println("unitsOfWater = " + unitsOfWater);
+        log.info(String.format("unitsOfWater = %d", unitsOfWater));
 
         return Math.max(0, unitsOfWater);
     }
@@ -102,7 +106,7 @@ public class Terrain {
         return result;
     }
 
-    public List<Long> getAsList() {
+    List<Long> getAsList() {
         return asList;
     }
 }
