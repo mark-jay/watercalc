@@ -26,6 +26,12 @@ public class Terrain {
         this.highestRight = initHighestRight();
     }
 
+    Terrain(List<Long> result) {
+        this.asList = result;
+        this.highestLeft = initHighestLeft();
+        this.highestRight = initHighestRight();
+    }
+
     public Long calc() {
         return IntStream.range(0, asList.size())
                 .mapToLong(this::findUnitsByIndex)
