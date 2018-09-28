@@ -1,4 +1,4 @@
-package kz.kaznu.watercal;
+package kz.kaznu.watercal.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,10 +8,16 @@ import java.util.stream.Stream;
 
 /**
  * @author <a href="mailto:mark.jay.mk@gmail.com">mark jay</a>
- * @since 9/28/18 9:43 PM
+ * @since 9/28/18 10:08 PM
  */
-public class WaterCalInputGenerator {
-    public List<Long> generateInput(String ... data) {
+public class Terrain {
+    private List<Long> asList;
+
+    public Terrain(String ... data) {
+        this.asList = generateFromStringArray(data);
+    }
+
+    private List<Long> generateFromStringArray(String ... data) {
         Objects.requireNonNull(data);
 
         if (data.length == 0) {
@@ -38,5 +44,9 @@ public class WaterCalInputGenerator {
         }
 
         return result;
+    }
+
+    public List<Long> getAsList() {
+        return asList;
     }
 }

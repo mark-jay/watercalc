@@ -6,5 +6,4 @@ package kz.kaznu.watercal;
  */
 public class WaterCalculator {
 
-
 }
