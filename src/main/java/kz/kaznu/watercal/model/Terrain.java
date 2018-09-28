@@ -86,16 +86,7 @@ public class Terrain {
     private List<Long> generateFromStringArray(String ... data) {
         Objects.requireNonNull(data);
 
-        if (data.length == 0) {
-            throw new IllegalArgumentException("data.length == 0");
-        }
-
-        boolean allSameSize = Stream.of(data)
-                .allMatch(string -> string.length() == data[0].length());
-
-        if (!allSameSize) {
-            throw new IllegalArgumentException("!allSameSize");
-        }
+        validateStringData(data);
 
         int length = data[0].length();
         ArrayList<Long> result = new ArrayList<>();
@@ -110,6 +101,19 @@ public class Terrain {
         }
 
         return result;
+    }
+
+    private void validateStringData(String[] data) {
+        if (data.length == 0) {
+            throw new IllegalArgumentException("data.length == 0");
+        }
+
+        boolean allSameSize = Stream.of(data)
+                .allMatch(string -> string.length() == data[0].length());
+
+        if (!allSameSize) {
+            throw new IllegalArgumentException("!allSameSize");
+        }
     }
 
     List<Long> getAsList() {
