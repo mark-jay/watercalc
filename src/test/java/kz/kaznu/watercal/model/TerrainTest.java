@@ -11,6 +11,84 @@ import java.util.Arrays;
  */
 public class TerrainTest {
 
+    @Test
+    public void testCalc_whenCalledOnEmpty_shouldReturn0() {
+        Terrain terrain = new Terrain("" +
+                "",
+                "",
+                ""
+        );
+        long result = terrain.calc();
+        Assert.assertEquals(
+                0
+                , result);
+    }
+
+    @Test
+    public void testCalc_whenCalledOnSingleTower_shouldReturn0() {
+        Terrain terrain = new Terrain("" +
+                "#",
+                "#",
+                "#"
+        );
+        long result = terrain.calc();
+        Assert.assertEquals(
+                0
+                , result);
+    }
+
+    @Test
+    public void testCalc_whenCalledOnTwoTower_shouldReturn0() {
+        Terrain terrain = new Terrain("" +
+                "# ",
+                "##",
+                "##"
+        );
+        long result = terrain.calc();
+        Assert.assertEquals(
+                0
+                , result);
+    }
+
+    @Test
+    public void testCalc_whenCalledOnTwoTowerSameSize_shouldReturn0() {
+        Terrain terrain = new Terrain("" +
+                "##",
+                "##",
+                "##"
+        );
+        long result = terrain.calc();
+        Assert.assertEquals(
+                0
+                , result);
+    }
+
+    @Test
+    public void testCalc_whenCalledOnThreeTowerSameSize_shouldReturn0() {
+        Terrain terrain = new Terrain("" +
+                "###",
+                "###",
+                "###"
+        );
+        long result = terrain.calc();
+        Assert.assertEquals(
+                0
+                , result);
+    }
+
+    @Test
+    public void testCalc_whenCalledOnEmpty1Sized_shouldReturn0() {
+        Terrain terrain = new Terrain("" +
+                " ",
+                " ",
+                " "
+        );
+        long result = terrain.calc();
+        Assert.assertEquals(
+                0
+                , result);
+    }
+
     private Terrain getTerrain() {
         return new Terrain("" +
                 "      #     # ",
