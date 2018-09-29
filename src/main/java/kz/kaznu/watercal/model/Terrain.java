@@ -17,18 +17,19 @@ public class Terrain {
     private static final Logger log = Logger.getLogger(Terrain.class.getCanonicalName());
 
     private final List<Long> asList;
-    private final List<Long> highestLeft;
     private final List<Long> highestRight;
+
+    private final TerrainHighestLeftSeeker leftSeeker;
 
     public Terrain(String ... data) {
         this.asList = generateFromStringArray(data);
-        this.highestLeft = initHighestLeft();
+        this.leftSeeker = new TerrainHighestLeftSeeker(this);
         this.highestRight = initHighestRight();
     }
 
     Terrain(List<Long> result) {
         this.asList = result;
-        this.highestLeft = initHighestLeft();
+        this.leftSeeker = new TerrainHighestLeftSeeker(this);
         this.highestRight = initHighestRight();
     }
 
@@ -36,16 +37,6 @@ public class Terrain {
         return IntStream.range(0, asList.size())
                 .mapToLong(this::findUnitsByIndex)
                 .sum();
-    }
-
-    private List<Long> initHighestLeft() {
-        ArrayList<Long> res = new ArrayList<>();
-        Long maxHighestSoFar = 0L;
-        for (Long height : asList) {
-            res.add(maxHighestSoFar);
-            maxHighestSoFar = Math.max(maxHighestSoFar, height);
-        }
-        return res;
     }
 
     long findUnitsByIndex(int index) {
@@ -76,7 +67,7 @@ public class Terrain {
     }
 
     Long findHighestFromTheLeft(int index) {
-        return highestLeft.get(index);
+        return leftSeeker.findHighestFromTheLeft(index);
     }
 
     Long findHighestFromTheRight(int index) {

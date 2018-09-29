@@ -89,43 +89,16 @@ public class TerrainTest {
                 , result);
     }
 
-    private Terrain getTerrain() {
-        return new Terrain("" +
-                "      #     # ",
-                "  #   #     # ",
-                "# #   #  #  # ",
-                "# #   #  #  # "
-        );
-    }
-
     @Test
     public void testConstructor_whenCalled_shouldGenerateCorrectTerrain() {
-        Terrain terrain = getTerrain();
+        Terrain terrain = TerrainGenerationTestUtils.getTerrain();
 
         Assert.assertEquals(Arrays.<Long>asList(2L, 0L, 3L, 0L, 0L, 0L, 4L, 0L, 0L, 2L, 0L, 0L, 4L, 0L), terrain.getAsList());
     }
 
     @Test
-    public void testFindHighestFromTheLeft_whenCalled_shouldCalc() {
-        Terrain terrain = getTerrain();
-        testLeft(terrain, 0, 0L);
-        testLeft(terrain, 1, 2L);
-        testLeft(terrain, 2, 2L);
-        testLeft(terrain, 3, 3L);
-        testLeft(terrain, 4, 3L);
-        testLeft(terrain, 5, 3L);
-        testLeft(terrain, 6, 3L);
-        testLeft(terrain, 7, 4L);
-        testLeft(terrain, 8, 4L);
-        testLeft(terrain, 9, 4L);
-        testLeft(terrain, 10, 4L);
-        testLeft(terrain, 11, 4L);
-        testLeft(terrain, 12, 4L);
-    }
-
-    @Test
     public void testFindHighestFromTheRight_whenCalled_shouldCalc() {
-        Terrain terrain = getTerrain();
+        Terrain terrain = TerrainGenerationTestUtils.getTerrain();
         testRight(terrain, 0, 4L);
         testRight(terrain, 1, 4L);
         testRight(terrain, 2, 4L);
@@ -144,7 +117,7 @@ public class TerrainTest {
 
     @Test
     public void testFindUnitsByIndex_whenCalled_shouldPass() {
-        Terrain terrain = getTerrain();
+        Terrain terrain = TerrainGenerationTestUtils.getTerrain();
         assertHeight(terrain, 0, 0);
         assertHeight(terrain, 1, 2);
         assertHeight(terrain, 2, 0);
@@ -163,15 +136,11 @@ public class TerrainTest {
 
     @Test
     public void testCalc_whenCalled_shouldCount() {
-        Terrain terrain = getTerrain();
+        Terrain terrain = TerrainGenerationTestUtils.getTerrain();
         long result = terrain.calc();
         Assert.assertEquals(
                 0 + 2 + 0 + 3 + 3 + 3 + 0 + 4 + 4 + 2 + 4 + 4 + 0 + 0
                 , result);
-    }
-
-    private void testLeft(Terrain terrain, int index, long expected) {
-        Assert.assertEquals(expected, (long) terrain.findHighestFromTheLeft(index));
     }
 
     private void testRight(Terrain terrain, int index, long expected) {
