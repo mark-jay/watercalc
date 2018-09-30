@@ -21,6 +21,11 @@ public class Terrain {
     private final TerrainHighestLeftSeeker leftSeeker;
     private final TerrainHighestRightSeeker rightSeeker;
 
+    /**
+     * O(N*M) where M - is the highest place
+     * Creates a terrain by the given ascii art:)
+     * @param data
+     */
     public Terrain(String ... data) {
         AsciiToTerrainConverter asciiToTerrainConverter = new AsciiToTerrainConverter();
         this.asList = asciiToTerrainConverter.generateFromStringArray(data);
@@ -28,14 +33,18 @@ public class Terrain {
         this.rightSeeker = new TerrainHighestRightSeeker(this);
     }
 
-    Terrain(List<Long> result) {
+    /**
+     * O(N) creates a terrain by the given raw data
+     * @param result
+     */
+    public Terrain(List<Long> result) {
         this.asList = result;
         this.leftSeeker = new TerrainHighestLeftSeeker(this);
         this.rightSeeker = new TerrainHighestRightSeeker(this);
     }
 
     /**
-     * Find amount of water in the whole terrain
+     * O(N). Find amount of water in the whole terrain that will remain after the rain
      * @return
      */
     public Long calc() {
@@ -45,11 +54,50 @@ public class Terrain {
     }
 
     /**
-     * finds amount of water in a specific point by a given index
+     * O(1)
+     *
+     * finds amount of water in a specific point by a given index.
+     *
+     * @param index
+     * @return number of units of water that will remain after the rain at a specified index. This guaranteed to be a positive number
+     */
+    public long findUnitsByIndex(int index) {
+        long waterLevel = getHighestPossibleWaterLevel(index);
+
+        long unitsOfWater = waterLevel - asList.get(index);
+        log.info(String.format("unitsOfWater = %d", unitsOfWater));
+
+        return Math.max(0, unitsOfWater);
+    }
+
+    /**
+     * O(1)
+     *
+     * Finds maximum potential water level that walls by the left and right can possibly hold.
+     * For example in this case:
+     *
+     *   #
+     * #_#  #
+     * #_# ##
+     * 01234567
+     *
+     * If we consider index = 3 then this method returns 2 because even though the left at index 2 can hold up to 3 units
+     * the wall on the right at index 5 can only hold 2 units.
+     *
+     * Worth noting that if we change this a bit to have a peak at index 3:
+     *
+     *    #
+     *   ##
+     * #_## #
+     * #_####
+     * 01234567
+     *
+     * The result of this function won't change as it ignores heigh at index
+     *
      * @param index
      * @return
      */
-    public long findUnitsByIndex(int index) {
+    private long getHighestPossibleWaterLevel(int index) {
         Long left = leftSeeker.findHighestFromTheLeft(index);
         log.info(String.format("left = %d", left));
 
@@ -58,11 +106,7 @@ public class Terrain {
 
         long waterLevel = Math.min(left, right);
         log.info(String.format("waterLevel = %d", waterLevel));
-
-        long unitsOfWater = waterLevel - asList.get(index);
-        log.info(String.format("unitsOfWater = %d", unitsOfWater));
-
-        return Math.max(0, unitsOfWater);
+        return waterLevel;
     }
 
     List<Long> getAsList() {

@@ -14,6 +14,12 @@ import java.util.stream.Stream;
  */
 class AsciiToTerrainConverter {
 
+    /**
+     * Converts ascii representation of a terrain to a list of heights
+     * 
+     * @param data
+     * @return
+     */
     List<Long> generateFromStringArray(String... data) {
         Objects.requireNonNull(data);
 
