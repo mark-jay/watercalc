@@ -40,10 +40,10 @@ public class Terrain {
     }
 
     long findUnitsByIndex(int index) {
-        Long left = findHighestFromTheLeft(index);
+        Long left = leftSeeker.findHighestFromTheLeft(index);
         log.info(String.format("left = %d", left));
 
-        Long right = findHighestFromTheRight(index);
+        Long right = rightSeeker.findHighestFromTheRight(index);
         log.info(String.format("right = %d", right));
 
         long waterLevel = Math.min(left, right);
@@ -53,14 +53,6 @@ public class Terrain {
         log.info(String.format("unitsOfWater = %d", unitsOfWater));
 
         return Math.max(0, unitsOfWater);
-    }
-
-    Long findHighestFromTheLeft(int index) {
-        return leftSeeker.findHighestFromTheLeft(index);
-    }
-
-    Long findHighestFromTheRight(int index) {
-        return rightSeeker.findHighestFromTheRight(index);
     }
 
     private List<Long> generateFromStringArray(String ... data) {
