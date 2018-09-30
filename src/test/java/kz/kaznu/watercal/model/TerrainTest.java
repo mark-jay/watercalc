@@ -97,25 +97,6 @@ public class TerrainTest {
     }
 
     @Test
-    public void testFindHighestFromTheRight_whenCalled_shouldCalc() {
-        Terrain terrain = TerrainGenerationTestUtils.getTerrain();
-        testRight(terrain, 0, 4L);
-        testRight(terrain, 1, 4L);
-        testRight(terrain, 2, 4L);
-        testRight(terrain, 3, 4L);
-        testRight(terrain, 4, 4L);
-        testRight(terrain, 5, 4L);
-        testRight(terrain, 6, 4L);
-        testRight(terrain, 7, 4L);
-        testRight(terrain, 8, 4L);
-        testRight(terrain, 9, 4L);
-        testRight(terrain, 10, 4L);
-        testRight(terrain, 11, 4L);
-        testRight(terrain, 12, 0L);
-        testRight(terrain, 13, 0L);
-    }
-
-    @Test
     public void testFindUnitsByIndex_whenCalled_shouldPass() {
         Terrain terrain = TerrainGenerationTestUtils.getTerrain();
         assertHeight(terrain, 0, 0);
@@ -141,10 +122,6 @@ public class TerrainTest {
         Assert.assertEquals(
                 0 + 2 + 0 + 3 + 3 + 3 + 0 + 4 + 4 + 2 + 4 + 4 + 0 + 0
                 , result);
-    }
-
-    private void testRight(Terrain terrain, int index, long expected) {
-        Assert.assertEquals("index = " + index, expected, (long) terrain.findHighestFromTheRight(index));
     }
 
     private void assertHeight(Terrain terrain, int index, int expected) {
