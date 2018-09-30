@@ -13,80 +13,56 @@ public class TerrainTest {
 
     @Test
     public void testCalc_whenCalledOnEmpty_shouldReturn0() {
-        Terrain terrain = new Terrain("" +
+        assertZeroTerrain(new Terrain("" +
                 "",
                 "",
                 ""
-        );
-        long result = terrain.calc();
-        Assert.assertEquals(
-                0
-                , result);
+        ));
     }
 
     @Test
     public void testCalc_whenCalledOnSingleTower_shouldReturn0() {
-        Terrain terrain = new Terrain("" +
+        assertZeroTerrain(new Terrain("" +
                 "#",
                 "#",
                 "#"
-        );
-        long result = terrain.calc();
-        Assert.assertEquals(
-                0
-                , result);
+        ));
     }
 
     @Test
     public void testCalc_whenCalledOnTwoTower_shouldReturn0() {
-        Terrain terrain = new Terrain("" +
+        assertZeroTerrain(new Terrain("" +
                 "# ",
                 "##",
                 "##"
-        );
-        long result = terrain.calc();
-        Assert.assertEquals(
-                0
-                , result);
+        ));
     }
 
     @Test
     public void testCalc_whenCalledOnTwoTowerSameSize_shouldReturn0() {
-        Terrain terrain = new Terrain("" +
+        assertZeroTerrain(new Terrain("" +
                 "##",
                 "##",
                 "##"
-        );
-        long result = terrain.calc();
-        Assert.assertEquals(
-                0
-                , result);
+        ));
     }
 
     @Test
     public void testCalc_whenCalledOnThreeTowerSameSize_shouldReturn0() {
-        Terrain terrain = new Terrain("" +
+        assertZeroTerrain(new Terrain("" +
                 "###",
                 "###",
                 "###"
-        );
-        long result = terrain.calc();
-        Assert.assertEquals(
-                0
-                , result);
+        ));
     }
 
     @Test
     public void testCalc_whenCalledOnEmpty1Sized_shouldReturn0() {
-        Terrain terrain = new Terrain("" +
+        assertZeroTerrain(new Terrain("" +
                 " ",
                 " ",
                 " "
-        );
-        long result = terrain.calc();
-        Assert.assertEquals(
-                0
-                , result);
+        ));
     }
 
     @Test
@@ -126,5 +102,12 @@ public class TerrainTest {
 
     private void assertHeight(Terrain terrain, int index, int expected) {
         Assert.assertEquals(expected, terrain.findUnitsByIndex(index));
+    }
+
+    private void assertZeroTerrain(Terrain terrain) {
+        long result = terrain.calc();
+        Assert.assertEquals(
+                0
+                , result);
     }
 }
