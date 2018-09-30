@@ -22,7 +22,8 @@ public class Terrain {
     private final TerrainHighestRightSeeker rightSeeker;
 
     public Terrain(String ... data) {
-        this.asList = generateFromStringArray(data);
+        AsciiToTerrainConverter asciiToTerrainConverter = new AsciiToTerrainConverter();
+        this.asList = asciiToTerrainConverter.generateFromStringArray(data);
         this.leftSeeker = new TerrainHighestLeftSeeker(this);
         this.rightSeeker = new TerrainHighestRightSeeker(this);
     }
@@ -33,13 +34,22 @@ public class Terrain {
         this.rightSeeker = new TerrainHighestRightSeeker(this);
     }
 
+    /**
+     * Find amount of water in the whole terrain
+     * @return
+     */
     public Long calc() {
         return IntStream.range(0, asList.size())
                 .mapToLong(this::findUnitsByIndex)
                 .sum();
     }
 
-    long findUnitsByIndex(int index) {
+    /**
+     * finds amount of water in a specific point by a given index
+     * @param index
+     * @return
+     */
+    public long findUnitsByIndex(int index) {
         Long left = leftSeeker.findHighestFromTheLeft(index);
         log.info(String.format("left = %d", left));
 
@@ -53,39 +63,6 @@ public class Terrain {
         log.info(String.format("unitsOfWater = %d", unitsOfWater));
 
         return Math.max(0, unitsOfWater);
-    }
-
-    private List<Long> generateFromStringArray(String ... data) {
-        Objects.requireNonNull(data);
-
-        validateStringData(data);
-
-        int length = data[0].length();
-        ArrayList<Long> result = new ArrayList<>();
-
-        for (int i = 0; i < length; i++) {
-            final int index = i;
-            long height = Arrays.stream(data)
-                    .map(string -> string.charAt(index))
-                    .filter(character -> '#' == character)
-                    .count();
-            result.add(height);
-        }
-
-        return result;
-    }
-
-    private void validateStringData(String[] data) {
-        if (data.length == 0) {
-            throw new IllegalArgumentException("data.length == 0");
-        }
-
-        boolean allSameSize = Stream.of(data)
-                .allMatch(string -> string.length() == data[0].length());
-
-        if (!allSameSize) {
-            throw new IllegalArgumentException("!allSameSize");
-        }
     }
 
     List<Long> getAsList() {
